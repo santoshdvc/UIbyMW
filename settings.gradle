@@ -1,0 +1,3 @@
+include ':uibymw'
+include ':app'
+rootProject.name = "UIbyMW"
