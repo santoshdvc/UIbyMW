@@ -39,6 +39,7 @@ public class LoadingBars extends View {
     private static final float DEFAULT_TITLE_CENTER_SIZE = 22.0f;
     private static final float DEFAULT_TITLE_BOTTOM_SIZE = 18.0f;
 
+    //properties
     private int canvasSize;
     private int canvasHeight;
     private int canvasWidth;
@@ -47,8 +48,6 @@ public class LoadingBars extends View {
     private int loadColor;
     private int shapeType;
     private int roundRectangleRadius;
-
-    // Properties.
     private String loadTitle;
     private float mDefaultWaterLevel;
     private float waterLevelRatio = 1f;
