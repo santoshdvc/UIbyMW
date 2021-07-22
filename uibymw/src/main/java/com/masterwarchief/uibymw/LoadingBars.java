@@ -33,6 +33,7 @@ public class LoadingBars {
     private static final float DEFAULT_TITLE_CENTER_SIZE = 22.0f;
     private static final float DEFAULT_TITLE_BOTTOM_SIZE = 18.0f;
 
+    // Properties.
     private int canvasSize;
     private int canvasHeight;
     private int canvasWidth;
@@ -41,8 +42,6 @@ public class LoadingBars {
     private int loadColor;
     private int shapeType;
     private int roundRectangleRadius;
-
-    // Properties.
     private String mTopTitle;
     private String centerTitle;
     private String mBottomTitle;
