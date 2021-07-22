@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LoadingView">
+        <attr name="loadBorderWidth" format="dimension"/>
+        <attr name="loadBorderColor" format="color"/>
+        <attr name="loadProgressValue" format="integer"/>
+        <attr name="loadShapeType" format="enum">
+            <enum name="triangle" value="0" />
+            <enum name="circle" value="1" />
+            <enum name="square" value="2" />
+            <enum name="rectangle" value="3" />
+        </attr>
+        <attr name="loadAnimation" format="enum">
+            <enum name="simple" value="0"/>
+            <enum name="rotate90" value="1"/>
+            <enum name="wave" value="2"/>
+            <enum name="bars" value="3"/>
+        </attr>
+        <attr name="loadRoundRectangle" format="boolean"/>
+        <attr name="loadRoundRectangleRadius" format="integer"/>
+        <attr name="loadWaveColor" format="color"/>
+        <attr name="loadWaveBgColor" format="color"/>
+        <attr name="loadWaveAmplitude" format="float"/>
+        <attr name="loadBarSize" format="dimension"/>
+        <attr name="loadTitle" format="string"/>
+        <attr name="loadTitleSize" format="dimension"/>
+        <attr name="loadTitleColor" format="color"/>
+        <attr name="loadTitleStrokeColor" format="color"/>
+        <attr name="loadTitleStrokeWidth" format="dimension"/>
+    </declare-styleable>
+</resources>
