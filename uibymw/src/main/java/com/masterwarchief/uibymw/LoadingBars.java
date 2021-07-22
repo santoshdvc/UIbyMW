@@ -11,8 +11,10 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 
 public class LoadingBars extends View {
+
     public enum ShapeType {
         TRIANGLE,
         CIRCLE,
@@ -32,7 +34,7 @@ public class LoadingBars extends View {
     private static final float DEFAULT_WAVE_LENGTH_RATIO = 1.0f;
     private static final float DEFAULT_WAVE_SHIFT_RATIO = 0.0f;
     private static final int DEFAULT_PROGRESS_VALUE = 50;
-    private static final int DEFAULT_WAVE_COLOR = Color.parseColor("#212121");
+    private static final int DEFAULT_LOAD_COLOR = Color.parseColor("#212121");
     private static final int DEFAULT_BACKGROUND_COLOR = Color.parseColor("#00000000");
     private static final int DEFAULT_TITLE_COLOR = Color.parseColor("#212121");
     private static final int DEFAULT_STROKE_COLOR = Color.TRANSPARENT;
@@ -66,7 +68,9 @@ public class LoadingBars extends View {
     private int loadBgColor;
     private int loadColor;
     private int shapeType;
+    private int loadAnimType;
     private int roundRectangleRadius;
+    private float mAmplitudeRatio;
     private String loadTitle;
     private float mDefaultWaterLevel;
     private float waterLevelRatio = 1f;
@@ -97,8 +101,44 @@ public class LoadingBars extends View {
         loadBgPaint.setAntiAlias(true);
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.LoadingView,defStyleAttr ,0);
         shapeType= attributes.getInteger(R.styleable.LoadingView_loadShapeType, DEFAULT_SHAPE);
+        loadColor= attributes.getColor(R.styleable.LoadingView_loadWaveColor, DEFAULT_LOAD_COLOR);
+        loadBgColor= attributes.getColor(R.styleable.LoadingView_loadWaveBgColor,DEFAULT_BACKGROUND_COLOR);
+
+        loadBgPaint.setColor(loadBgColor);
+        loadAnimType= attributes.getInteger(R.styleable.LoadingView_loadAnimation, DEFAULT_ANIMATION_TYPE);
+
+        if(loadAnimType==2){
+            float amplitudeRatioAttr = attributes.getFloat(R.styleable.LoadingView_loadWaveAmplitude, DEFAULT_AMPLITUDE_VALUE) / 1000;
+            mAmplitudeRatio = (amplitudeRatioAttr > DEFAULT_AMPLITUDE_RATIO) ? DEFAULT_AMPLITUDE_RATIO : amplitudeRatioAttr;
+
+        }
+        // Init Progress
+        progressValue = attributes.getInteger(R.styleable.LoadingView_loadProgressValue, DEFAULT_PROGRESS_VALUE);
+        setProgressValue(progressValue);
 
     }
+    /**
+     * @param progress Default to be 50.
+     */
+    private void setProgressValue(int progress) {
+        progressValue = progress;
+        ObjectAnimator waterLevelAnim = ObjectAnimator.ofFloat(this, "waterLevelRatio", waterLevelRatio, ((float) progressValue / 100));
+        waterLevelAnim.setDuration(1000);
+        waterLevelAnim.setInterpolator(new DecelerateInterpolator());
+        AnimatorSet animatorSetProgress = new AnimatorSet();
+        animatorSetProgress.play(waterLevelAnim);
+        animatorSetProgress.start();
+    }
 
+    public int getProgressValue() {
+        return progressValue;
+    }
 
+    public void setWaterLevelRatio(float waterLevelRatio) {
+        this.waterLevelRatio = waterLevelRatio;
+    }
+
+    public float getWaterLevelRatio() {
+        return waterLevelRatio;
+    }
 }
