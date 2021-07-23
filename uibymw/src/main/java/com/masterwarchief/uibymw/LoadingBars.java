@@ -190,13 +190,12 @@ public class LoadingBars extends View {
 
     private Path getEquilateralTriangle(Point start, int width, int height) {
         Point p2 = null, p3 = null;
-            p2 = new Point(start.x + width, start.y);
-            p3 = new Point(start.x + (width / 2), (int) (height - Math.sqrt(3.0) / 2 * height));
+        p2 = new Point(start.x + width, start.y);
+        p3 = new Point(start.x + (width / 2), (int) (height - Math.sqrt(3.0) / 2 * height));
         Path path = new Path();
         path.moveTo(start.x, start.y);
         path.lineTo(p2.x, p2.y);
         path.lineTo(p3.x, p3.y);
-
         return path;
 
     }
