@@ -18,6 +18,7 @@
         </attr>
         <attr name="loadRoundRectangle" format="boolean"/>
         <attr name="loadRoundRectangleRadius" format="integer"/>
+        <attr name="roundRectangleXY" format="integer"/>
         <attr name="loadWaveColor" format="color"/>
         <attr name="loadWaveBgColor" format="color"/>
         <attr name="loadWaveAmplitude" format="float"/>
