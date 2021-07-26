@@ -200,6 +200,17 @@ public class LoadingBars extends View {
 
     }
 
+    public void setAmplitudeRatio(int amplitudeRatio) {
+        if (this.mAmplitudeRatio != (float) amplitudeRatio / 1000) {
+            this.mAmplitudeRatio = (float) amplitudeRatio / 1000;
+            invalidate();
+        }
+    }
+
+    public float getAmplitudeRatio() {
+        return mAmplitudeRatio;
+    }
+
 
     /**
      * @param progress Default to be 50.
