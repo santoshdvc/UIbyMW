@@ -211,6 +211,63 @@ public class LoadingBars extends View {
         return mAmplitudeRatio;
     }
 
+    public void setWaveBgColor(int color) {
+        this.loadBgColor = color;
+        loadBgPaint.setColor(this.loadBgColor);
+        updateWaveShader();
+        invalidate();
+    }
+
+    private void updateWaveShader() {
+
+    }
+
+    public int getWaveBgColor() {
+        return loadBgColor;
+    }
+
+    public void setWaveColor(int color) {
+        loadColor = color;
+        // Need to recreate shader when color changed ?
+//        mWaveShader = null;
+        updateWaveShader();
+        invalidate();
+    }
+
+    public int getWaveColor() {
+        return loadColor;
+    }
+
+    public void setBorderWidth(float width) {
+        loadBorderPaint.setStrokeWidth(width);
+        invalidate();
+    }
+
+    public float getBorderWidth() {
+        return loadBorderPaint.getStrokeWidth();
+    }
+
+    public void setBorderColor(int color) {
+        loadBorderPaint.setColor(color);
+        updateWaveShader();
+        invalidate();
+    }
+
+    public int getBorderColor() {
+        return loadBorderPaint.getColor();
+    }
+
+    public void setShapeType(ShapeType mshapeType) {
+        shapeType = mshapeType.ordinal();
+        invalidate();
+    }
+
+    public int getShapeType() {
+        return shapeType;
+    }
+
+
+
 
     /**
      * @param progress Default to be 50.
