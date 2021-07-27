@@ -374,4 +374,21 @@ public class LoadingBars extends View {
         }
     }
 
+    public void endAnimation() {
+        if (animatorSet != null) {
+            animatorSet.end();
+        }
+    }
+
+    public void pauseAnimation() {
+        if (animatorSet != null) {
+            animatorSet.pause();
+        }
+    }
+
+    public void resumeAnimation() {
+        if (animatorSet != null) {
+            animatorSet.resume();
+        }
+    }
 }
