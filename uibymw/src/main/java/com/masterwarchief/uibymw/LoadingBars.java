@@ -13,6 +13,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
@@ -214,12 +215,61 @@ public class LoadingBars extends View {
     public void setWaveBgColor(int color) {
         this.loadBgColor = color;
         loadBgPaint.setColor(this.loadBgColor);
-        updateWaveShader();
+        updateShader();
         invalidate();
     }
 
-    private void updateWaveShader() {
+    private void updateShader() {
+        if (bitmapBuffer == null || haveBoundsChanged()) {
+            if (bitmapBuffer != null)
+                bitmapBuffer.recycle();
+            int width = getMeasuredWidth();
+            int height = getMeasuredHeight();
+            if (width > 0 && height > 0) {
+                double defaultAngularFrequency = 2.0f * Math.PI / DEFAULT_WAVE_LENGTH_RATIO / width;
+                float defaultAmplitude = height * DEFAULT_AMPLITUDE_RATIO;
+                defaultWaterLevel = height * DEFAULT_WATER_LEVEL_RATIO;
+                float defaultWaveLength = width;
 
+                Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(bitmap);
+
+                Paint wavePaint = new Paint();
+                wavePaint.setStrokeWidth(2);
+                wavePaint.setAntiAlias(true);
+
+                // Draw default waves into the bitmap.
+                final int endX = width + 1;
+                final int endY = height + 1;
+
+                float[] waveY = new float[endX];
+
+                wavePaint.setColor(adjustAlpha(loadColor, 0.3f));
+                for (int beginX = 0; beginX < endX; beginX++) {
+                    double wx = beginX * defaultAngularFrequency;
+                    float beginY = (float) (defaultWaterLevel + defaultAmplitude * Math.sin(wx));
+                    canvas.drawLine(beginX, beginY, beginX, endY, wavePaint);
+                    waveY[beginX] = beginY;
+                }
+
+                wavePaint.setColor(loadColor);
+                final int wave2Shift = (int) (defaultWaveLength / 4);
+                for (int beginX = 0; beginX < endX; beginX++) {
+                    canvas.drawLine(beginX, waveY[(beginX + wave2Shift) % endX], beginX, endY, wavePaint);
+                }
+                // Use the bitmap to create the shader.
+                loadWaveShader = new BitmapShader(bitmap, Shader.TileMode.REPEAT, Shader.TileMode.CLAMP);
+                this.loadWavePaint.setShader(loadWaveShader);
+            }
+        }
+    }
+
+    private boolean haveBoundsChanged() {
+        return true;
+    }
+
+    private int adjustAlpha(int loadColor, float v) {
+        return 0;
     }
 
     public int getWaveBgColor() {
@@ -230,7 +280,7 @@ public class LoadingBars extends View {
         loadColor = color;
         // Need to recreate shader when color changed ?
 //        mWaveShader = null;
-        updateWaveShader();
+        updateShader();
         invalidate();
     }
 
@@ -249,7 +299,7 @@ public class LoadingBars extends View {
 
     public void setBorderColor(int color) {
         loadBorderPaint.setColor(color);
-        updateWaveShader();
+        updateShader();
         invalidate();
     }
 
