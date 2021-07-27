@@ -357,6 +357,9 @@ public class LoadingBars extends View {
     }
 
     private void startAnimation() {
+        if (animatorSet != null) {
+            animatorSet.start();
+        }
     }
 
     @Override
@@ -366,6 +369,9 @@ public class LoadingBars extends View {
     }
 
     private void cancelAnimation() {
+        if (animatorSet != null) {
+            animatorSet.cancel();
+        }
     }
 
 }
