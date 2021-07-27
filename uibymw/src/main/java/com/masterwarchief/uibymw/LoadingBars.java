@@ -265,11 +265,16 @@ public class LoadingBars extends View {
     }
 
     private boolean haveBoundsChanged() {
-        return true;
+        return getMeasuredWidth() != bitmapBuffer.getWidth() ||
+                getMeasuredHeight() != bitmapBuffer.getHeight();
     }
 
-    private int adjustAlpha(int loadColor, float v) {
-        return 0;
+    private int adjustAlpha(int lColor, float v) {
+        int alpha = Math.round(Color.alpha(lColor) * v);
+        int red = Color.red(lColor);
+        int green = Color.green(lColor);
+        int blue = Color.blue(lColor);
+        return Color.argb(alpha, red, green, blue);
     }
 
     public int getWaveBgColor() {
