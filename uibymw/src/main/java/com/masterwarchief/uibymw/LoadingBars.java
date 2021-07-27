@@ -348,4 +348,24 @@ public class LoadingBars extends View {
     public float getWaterLevelRatio() {
         return waterLevelRatio;
     }
+
+
+    @Override
+    protected void onAttachedToWindow() {
+        startAnimation();
+        super.onAttachedToWindow();
+    }
+
+    private void startAnimation() {
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        cancelAnimation();
+        super.onDetachedFromWindow();
+    }
+
+    private void cancelAnimation() {
+    }
+
 }
